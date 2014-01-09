@@ -1,31 +1,4 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2009-2010 William Lam All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-# 3. The name of the author or contributors may not be used to endorse or
-#    promote products derived from this software without specific prior
-#    written permission.
-# 4. Consent from original author prior to redistribution
-
-# THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND
-# ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-# ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-# OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-# OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-# SUCH DAMAGE.
-
 ##################################################################
 # Author: William Lam
 # 01/26/2009
@@ -1036,7 +1009,7 @@ sub printHostDatastoreInfo {
 					my $browser = Vim::get_view (mo_ref => $ds->browser);
 					my $ds_path = "[" . $ds->info->name . "]";
 
-					my $file_query = FileQueryFlags->new(fileSize => 1,fileType => 0,modification => 1);
+					my $file_query = FileQueryFlags->new(fileSize => 1,fileType => 0,modification => 1,fileOwner => 1);
 
 					my $searchSpec = HostDatastoreBrowserSearchSpec->new(details => $file_query,matchPattern => ["*.vmsn", "*-delta.vmdk"]);
 					my $search_res = $browser->SearchDatastoreSubFolders(datastorePath => $ds_path,searchSpec => $searchSpec);
@@ -1869,7 +1842,7 @@ sub printTasks {
 		if(!defined($progress)) {
 			$progress = "COMPLETED";
 		}
-		$task_string .= "<tr><td>".$_->info->descriptionId."</td><td>".$_->info->queueTime."</td><td>".($_->info->startTime ? $_->info->startTime : "N/A")."</td><td>".($_->info->completeTime ? $_->info->completeTime : "N/A")."</td><td>".$progress."</td><td>".$_->info->state->val."</td></tr>\n";
+		my $taskString .= "<tr><td>".$_->info->descriptionId."</td><td>".$_->info->queueTime."</td><td>".($_->info->startTime ? $_->info->startTime : "N/A")."</td><td>".($_->info->completeTime ? $_->info->completeTime : "N/A")."</td><td>".$progress."</td><td>".$_->info->state->val."</td></tr>\n";
 	}
 
 	if($tasks) {
